@@ -29,14 +29,11 @@ class MyNotesListVC: UIViewController, UITextFieldDelegate {
         notesListTV.dataSource = self
         notesListTV.register(UINib(nibName: MyNotesTVC.identifier, bundle: nil), forCellReuseIdentifier: MyNotesTVC.identifier)
         
-       notesArray = dbHelperObj.featchItemList()
+        // SearchBar addTarget
+        notesArray = dbHelperObj.featchItemList()
         notesBackUpArray = dbHelperObj.featchItemList()
-        
-    txtSearch.addTarget(self, action: #selector(textSearchChange(_:)), for: .editingChanged)
-        
-        
-       
-    }
+        txtSearch.addTarget(self, action: #selector(textSearchChange(_:)), for: .editingChanged)
+      }
     
     //    @IBAction func searchHendler(_ sender: UITextField) {
 //        if let searchText = sender.text {
@@ -65,12 +62,13 @@ class MyNotesListVC: UIViewController, UITextFieldDelegate {
         navigationController?.pushViewController(vc, animated: true)
 }
     override func viewWillAppear(_ animated: Bool) {
+        notesArray = dbHelperObj.featchItemList()
         self.notesListTV.reloadData()
         notesNotFound()
     }
 }
 // Extension
-
+// Tableview Delegate
 extension MyNotesListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notesArray.count
@@ -122,7 +120,6 @@ extension MyNotesListVC: UITableViewDelegate, UITableViewDataSource {
         cell.editNotes = {
             let editVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "AddNotesViewController") as! AddNotesViewController
             editVC.obj = self.notesArray[indexPath.row]
-            
             self.navigationController?.pushViewController(editVC, animated: false)
             
         }

@@ -126,14 +126,12 @@ class DBHelper {
     func updateItem(id: Int32, status: String)
     {
 
-        let updateQuary = "UPDATE noteList SET status = \(status) WHER id = \(id);"
+        let updateQuary = "UPDATE noteList SET status = '\(status)' WHERE id = \(id);"
         var updateQuaryStatement: OpaquePointer? = nil
-    
         if sqlite3_prepare_v2(database, updateQuary, -1, &updateQuaryStatement, nil) == SQLITE_OK
         {
             sqlite3_bind_int(updateQuaryStatement, 1, id)
-            sqlite3_bind_text(updateQuaryStatement, 2, (status), -1, nil)
-
+            
             if sqlite3_step(updateQuaryStatement) == SQLITE_DONE
             {
                 //completion("Successfully update row")

@@ -36,8 +36,9 @@ class AddNotesViewController: UIViewController {
     @IBOutlet weak var txtPriority: UITextField!
     @IBOutlet weak var txtDate: UITextField!
     @IBOutlet weak var txtStatus: UITextField!
-    @IBOutlet weak var txtDescription: UITextField!
+   
     
+    @IBOutlet weak var txtDescription: UITextView!
     
     @IBOutlet weak var btnAdd: UIButton!
     
