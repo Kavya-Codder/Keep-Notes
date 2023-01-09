@@ -22,6 +22,7 @@ class MyNotesListVC: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         initialSetUp()
+        notesArray = dbHelperObj.featchItemList()
         lblNotesNotFound.isHidden = true
         self.notesBackUpArray = notesArray
         notesNotFound()
@@ -30,8 +31,7 @@ class MyNotesListVC: UIViewController, UITextFieldDelegate {
         notesListTV.register(UINib(nibName: MyNotesTVC.identifier, bundle: nil), forCellReuseIdentifier: MyNotesTVC.identifier)
         
         // SearchBar addTarget
-        notesArray = dbHelperObj.featchItemList()
-        notesBackUpArray = dbHelperObj.featchItemList()
+        
         txtSearch.addTarget(self, action: #selector(textSearchChange(_:)), for: .editingChanged)
       }
     

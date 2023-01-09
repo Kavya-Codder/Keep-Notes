@@ -53,7 +53,7 @@ class DBHelper {
 
     // Insert data
     
-    func insertData(notesList: NotesModel) {
+    func insertData(notesList: NotesModel, completion: @escaping (String) -> Void) {
         let insertQuary = "INSERT INTO noteList(id,title,priority,date,status,description) VALUES(?,?,?,?,?,?);"
         var insertStatement: OpaquePointer?
         if sqlite3_prepare_v2(database, insertQuary, -1, &insertStatement, nil) == SQLITE_OK {
@@ -64,9 +64,17 @@ class DBHelper {
             sqlite3_bind_text(insertStatement, 5, (notesList.status as NSString).utf8String, -1, nil)
             sqlite3_bind_text(insertStatement, 6, (notesList.description as NSString).utf8String, -1, nil)
             if sqlite3_step(insertStatement) == SQLITE_OK {
-               // completion("data inserted successfully")
+                let seconds = 4.0
+                DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                    completion("data inserted successfully")
+                }
+             //
                 print("data inserted successfully.")
             } else {
+                let seconds = 4.0
+                DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                    completion("data inserted successfully")
+                }
                 print("could not insert row.")
             }
         } else {
@@ -150,3 +158,11 @@ class DBHelper {
         print("update")
     }
 }
+struct UserModel {
+    var name: String?
+    var address: String?
+    init(response: [String]) {
+        <#statements#>
+    }
+}
+

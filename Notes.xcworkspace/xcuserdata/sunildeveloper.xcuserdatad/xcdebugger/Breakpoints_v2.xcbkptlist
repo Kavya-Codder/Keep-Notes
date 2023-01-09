@@ -3,4 +3,54 @@
    uuid = "3A1AD34D-96C5-4A41-8E38-5EA7E78A7A3D"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "395BB3C6-9B0C-4242-B8B6-5152EC3A00E6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Notes/AddNotesViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
+            landmarkName = "onClickAddBtn(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "395BB3C6-9B0C-4242-B8B6-5152EC3A00E6 - fb40f2b1bf35056a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Notes.AddNotesViewController.onClickAddBtn(Any) -&gt; ()"
+                  moduleName = "Notes"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sunildeveloper/Desktop/kavya/Notes/Notes/AddNotesViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "137"
+                  endingLineNumber = "137"
+                  offsetFromSymbolStart = "1700">
+               </Location>
+               <Location
+                  uuid = "395BB3C6-9B0C-4242-B8B6-5152EC3A00E6 - 2ee55cf5f246b5c0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.String) -&gt; () in Notes.AddNotesViewController.onClickAddBtn(Any) -&gt; ()"
+                  moduleName = "Notes"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sunildeveloper/Desktop/kavya/Notes/Notes/AddNotesViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "138"
+                  endingLineNumber = "138"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

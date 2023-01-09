@@ -134,17 +134,17 @@ class AddNotesViewController: UIViewController {
                     self.navigationController?.popViewController(animated: true)
                 }
             } else {
-            dbHelperObj.insertData(notesList: NotesModel(id: Int.random(in: 0..<6), title: txtTitle.text ?? "", priority: txtPriority.text ?? "", date: txtDate.text ?? "", status: txtStatus.text ?? "", description: txtDescription.text ?? ""))
-            print(self.dbHelperObj.featchItemList())
-            let data = dbHelperObj.featchItemList()
-            for i in data {
-                print(i.title)
-                
-                showAlert(title: "Success", message: "add notes successfully") { (str) in
-                    let listVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MyNotesListVC") as! MyNotesListVC
-                    self.navigationController?.pushViewController(listVC, animated: true)
+                dbHelperObj.insertData(notesList: NotesModel(id: Int.random(in: 0..<6), title: txtTitle.text ?? "", priority: txtPriority.text ?? "", date: txtDate.text ?? "", status: txtStatus.text ?? "", description: txtDescription.text ?? "")) { (str) in
+                    print(self.dbHelperObj.featchItemList())
+
+                        self.showAlert(title: "Success", message: "add notes successfully") { (str) in
+                            let listVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MyNotesListVC") as! MyNotesListVC
+                            self.navigationController?.pushViewController(listVC, animated: true)
+                        }
+                    
                 }
-            }
+//            dbHelperObj.insertData(notesList: NotesModel(id: Int.random(in: 0..<6), title: txtTitle.text ?? "", priority: txtPriority.text ?? "", date: txtDate.text ?? "", status: txtStatus.text ?? "", description: txtDescription.text ?? ""))
+            
         }
         }
         else {
@@ -205,23 +205,53 @@ extension AddNotesViewController: UIPickerViewDelegate, UIPickerViewDataSource, 
     func initialSetUp() {
         viewTitle.clipsToBounds = true
         viewTitle.layer.cornerRadius = 20
-        
+        viewTitle.layer.shadowColor = UIColor(named: "colour-5")?.cgColor
+        viewTitle.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        viewTitle.layer.shadowRadius = 2.0
+        viewTitle.layer.shadowOpacity = 1.0
+        viewTitle.layer.masksToBounds = false
+        //colour-5
         viewPriority.clipsToBounds = true
         viewPriority.layer.cornerRadius = 20
+        viewPriority.layer.shadowColor = UIColor(named: "colour-5")?.cgColor
+        viewPriority.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        viewPriority.layer.shadowRadius = 2.0
+        viewPriority.layer.shadowOpacity = 1.0
+        viewPriority.layer.masksToBounds = false
         
         viewDate.clipsToBounds = true
         viewDate.layer.cornerRadius = 20
+        viewDate.layer.shadowColor = UIColor(named: "colour-5")?.cgColor
+        viewDate.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        viewDate.layer.shadowRadius = 2.0
+        viewDate.layer.shadowOpacity = 1.0
+        viewDate.layer.masksToBounds = false
         
         viewStatus.clipsToBounds = true
         viewStatus.layer.cornerRadius = 20
+        viewStatus.layer.shadowColor = UIColor(named: "colour-5")?.cgColor
+        viewStatus.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        viewStatus.layer.shadowRadius = 2.0
+        viewStatus.layer.shadowOpacity = 1.0
+        viewStatus.layer.masksToBounds = false
         
         viewDescription.clipsToBounds = true
         viewDescription.layer.cornerRadius = 20
+        viewDescription.layer.shadowColor = UIColor(named: "colour-5")?.cgColor
+        viewDescription.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        viewDescription.layer.shadowRadius = 2.0
+        viewDescription.layer.shadowOpacity = 1.0
+        viewDescription.layer.masksToBounds = false
         
         btnAdd.clipsToBounds = true
         btnAdd.layer.cornerRadius = 25
         btnAdd.layer.borderWidth = 1.5
         btnAdd.layer.borderColor = UIColor.white.cgColor
+        btnAdd.layer.shadowColor = UIColor(named: "colour-4")?.cgColor
+        btnAdd.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        btnAdd.layer.shadowRadius = 2.0
+        btnAdd.layer.shadowOpacity = 1.0
+        btnAdd.layer.masksToBounds = false
     }
     
     func doValidation() -> (Bool, String) {
