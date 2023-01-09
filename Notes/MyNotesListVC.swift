@@ -7,23 +7,57 @@
 
 import UIKit
 
-class MyNotesListVC: UIViewController {
+class MyNotesListVC: UIViewController, UITextFieldDelegate {
     
-    var dbHelperObj: DBHelper = DBHelper()
-
+    @IBOutlet weak var lblNotesNotFound: UILabel!
+    @IBOutlet weak var txtSearch: UITextField!
+    @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var btnAdd: UIButton!
     @IBOutlet weak var notesListTV: UITableView!
+    var dbHelperObj: DBHelper = DBHelper()
     var obj: NotesModel?
     
     var notesArray: [NotesModel] = []
+    var notesBackUpArray: [NotesModel] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        initialSetUp()
+        lblNotesNotFound.isHidden = true
+        self.notesBackUpArray = notesArray
+        notesNotFound()
         notesListTV.delegate = self
         notesListTV.dataSource = self
         notesListTV.register(UINib(nibName: MyNotesTVC.identifier, bundle: nil), forCellReuseIdentifier: MyNotesTVC.identifier)
         
        notesArray = dbHelperObj.featchItemList()
+        notesBackUpArray = dbHelperObj.featchItemList()
+        
+    txtSearch.addTarget(self, action: #selector(textSearchChange(_:)), for: .editingChanged)
+        
+        
+       
+    }
+    
+    //    @IBAction func searchHendler(_ sender: UITextField) {
+//        if let searchText = sender.text {
+//            notesArray = notesBackUpArray.filter({ note in
+//                return (note.description).lowercased().contains(searchText.lowercased())
+//            })
+//        }
+//        self.notesListTV.reloadData()
+//    }
+    
+    @objc func textSearchChange(_ sender: UITextField){
+        print(sender.text ?? "")
+        if (sender.text?.isEmpty ?? false){
+            self.notesArray = notesBackUpArray
+        } else {
+            notesArray = notesBackUpArray.filter({ note in
+                return (note.description).lowercased().contains((sender.text ?? "").lowercased())
+            })
+            self.notesListTV.reloadData()
+        }
+        self.notesListTV.reloadData()
     }
     
     @IBAction func onClickAddBtn(_ sender: Any) {
@@ -32,6 +66,7 @@ class MyNotesListVC: UIViewController {
 }
     override func viewWillAppear(_ animated: Bool) {
         self.notesListTV.reloadData()
+        notesNotFound()
     }
 }
 // Extension
@@ -50,10 +85,15 @@ extension MyNotesListVC: UITableViewDelegate, UITableViewDataSource {
         cell.lblStatus.text = "Status: \(obj.status)"
         cell.lblDescription.text = "Body: \(obj.description)"
         cell.lblPriority.text = "Priority: \(obj.priority)"
-        if cell.lblPriority.text == "Urgent" {
-            cell.viewContainer.backgroundColor = UIColor.red
-            cell.lblTitle.tintColor = UIColor.white
-            cell.lblDescription.tintColor = UIColor.white
+        if obj.priority == "Urgent" {
+            cell.viewContainer.backgroundColor = UIColor(named: "red-1")
+            cell.lblTitle.textColor = UIColor.white
+            cell.lblPriority.textColor = UIColor.white
+            cell.lblDate.textColor = UIColor.white
+            cell.lblDescription.textColor = UIColor.white
+            cell.lblStatus.textColor = UIColor.white
+            cell.btnEdit.tintColor = UIColor.white
+            cell.btnDelete.tintColor = UIColor.white
         }
         
         // Delete item
@@ -67,6 +107,7 @@ extension MyNotesListVC: UITableViewDelegate, UITableViewDataSource {
                     self.notesArray.remove(at: indexPath.row)
                     DispatchQueue.main.async {
                         self.notesListTV.reloadData()
+                        self.notesNotFound()
                     }
                 })
             }
@@ -87,6 +128,21 @@ extension MyNotesListVC: UITableViewDelegate, UITableViewDataSource {
         }
         
         return cell
+    }
+
+    func notesNotFound() {
+        if notesArray.count == 0 {
+            lblNotesNotFound.isHidden = false
+        } else {
+            lblNotesNotFound.isHidden = true
+        }
+    }
+    
+    func initialSetUp() {
+        searchView.clipsToBounds = true
+        searchView.layer.cornerRadius = 15
+        searchView.layer.borderWidth = 1.0
+        searchView.layer.borderColor = UIColor.black.cgColor
     }
     
     

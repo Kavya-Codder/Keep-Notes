@@ -17,8 +17,9 @@ static let identifier = "MyNotesTVC"
     @IBOutlet weak var lblDate: UILabel!
     @IBOutlet weak var lblStatus: UILabel!
     @IBOutlet weak var lblDescription: UILabel!
-    
     @IBOutlet weak var lblPriority: UILabel!
+    @IBOutlet weak var btnEdit: UIButton!
+    @IBOutlet weak var btnDelete: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -38,7 +38,7 @@ class AddNotesViewController: UIViewController {
     @IBOutlet weak var txtStatus: UITextField!
     @IBOutlet weak var txtDescription: UITextField!
     
-
+    
     @IBOutlet weak var btnAdd: UIButton!
     
     var dbHelperObj: DBHelper = DBHelper()
@@ -107,7 +107,7 @@ class AddNotesViewController: UIViewController {
     
     @objc func doneDatePicker() {
         let formatter = DateFormatter()
-      formatter.dateFormat = "d MMM YYYY 'at' HH:mm"
+        formatter.dateFormat = "d MMM YYYY 'at' HH:mm"
         txtDate.text = formatter.string(from: datePicker.date)
         self.view.endEditing(true)
     }
@@ -121,11 +121,18 @@ class AddNotesViewController: UIViewController {
         let listVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MyNotesListVC") as! MyNotesListVC
         self.navigationController?.pushViewController(listVC, animated: true)
     }
-
+    
     @IBAction func onClickAddBtn(_ sender: Any) {
         
         let validation = doValidation()
         if validation.0 {
+            if self .obj != nil {
+                dbHelperObj.updateItem(id: Int32(obj?.id ?? 0), status: txtStatus.text ?? "")
+                
+                showAlert(title: "Update", message: "update successfully") { (alert) in
+                    self.navigationController?.popViewController(animated: true)
+                }
+            } else {
             dbHelperObj.insertData(notesList: NotesModel(id: Int.random(in: 0..<6), title: txtTitle.text ?? "", priority: txtPriority.text ?? "", date: txtDate.text ?? "", status: txtStatus.text ?? "", description: txtDescription.text ?? ""))
             print(self.dbHelperObj.featchItemList())
             let data = dbHelperObj.featchItemList()
@@ -138,33 +145,34 @@ class AddNotesViewController: UIViewController {
                 }
             }
         }
+        }
         else {
             showAlert(title: "error", message: validation.1, hendler: nil)
         }
-        
     }
-    
-       
+    override func viewWillAppear(_ animated: Bool) {
+        changeText()
     }
+}
 
 // Extension
 extension AddNotesViewController: UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
-        func textFieldDidBeginEditing(_ textField: UITextField) {
-            currentTextField = textField
-            if textField == txtStatus {
-                txtStatus.inputView = statusPicker
-            } else {
-                txtPriority.inputView = priorityPicker
-            }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        currentTextField = textField
+        if textField == txtStatus {
+            txtStatus.inputView = statusPicker
+        } else {
+            txtPriority.inputView = priorityPicker
         }
+    }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if currentTextField == txtStatus {
-        return statusArray.count
+            return statusArray.count
         } else if currentTextField == txtPriority {
             return priorityArray.count
         }
@@ -174,7 +182,7 @@ extension AddNotesViewController: UIPickerViewDelegate, UIPickerViewDataSource, 
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if currentTextField == txtStatus {
-        return statusArray[row]
+            return statusArray[row]
         } else if currentTextField == txtPriority {
             return priorityArray[row]
         }
@@ -228,5 +236,11 @@ extension AddNotesViewController: UIPickerViewDelegate, UIPickerViewDataSource, 
             return (false, NotesValidation.description.rawValue)
         }
         return (true, "")
+    }
+    func changeText() {
+        if self.obj != nil {
+            btnAdd.setTitle("Update", for: .normal)
+            lblTopTitle.text = "Update note"
+        }
     }
 }
